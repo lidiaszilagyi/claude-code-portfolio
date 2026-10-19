@@ -6,7 +6,7 @@
 
 ## A probléma
 
-Hárman (az Ügyfél, az Irodavezető és én virtuális asszisztensként) közös feladatlistán szerettünk volna dolgozni. A Trello kézenfekvő lett volna, de az Ügyfél nem akart újabb szolgáltatásba regisztrálni. Emellett olyan láthatósági szabályokra volt szükség, amelyeket egy általános eszköz nem tud egyszerűen kezelni: vannak témák, amelyekről az Irodavezető nem tudhat.
+Hárman (az Ügyfél, az Irodavezető és én operatív partnerként) közös feladatlistán szerettünk volna dolgozni. A Trello kézenfekvő lett volna, de az Ügyfél nem akart újabb szolgáltatásba regisztrálni. Emellett olyan láthatósági szabályokra volt szükség, amelyeket egy általános eszköz nem tud egyszerűen kezelni: vannak témák, amelyekről az Irodavezető nem tudhat.
 
 ## Követelmények
 
@@ -27,9 +27,9 @@ A legérzékenyebb rész: az Irodavezető semmilyen körülmények között nem 
 ```mermaid
 flowchart LR
     U[Ügyfél] -->|látja| UF[Saját feladatai]
-    U -->|látja| VF[VA feladatai]
+    U -->|látja| VF[Operatív partner feladatai]
     U -->|látja| IF[Irodavezető feladatai]
-    V[VA - én] -->|látja| UF
+    V[Operatív partner - én] -->|látja| UF
     V -->|látja| VF
     V -->|látja| IF
     I[Irodavezető] -->|látja| IF
@@ -40,7 +40,7 @@ flowchart LR
 | Szerepkör | Látja | Kezelheti |
 |-----------|-------|-----------|
 | Ügyfél | Mindenki feladatát | Saját és gazdátlan feladatok |
-| Virtuális asszisztens | Mindenki feladatát | Saját és gazdátlan feladatok |
+| Operatív partner (én) | Mindenki feladatát | Saját és gazdátlan feladatok |
 | Irodavezető | Csak a saját és a vele megosztott feladatokat | Saját és gazdátlan (számára látható) feladatok |
 
 ## Első fázis

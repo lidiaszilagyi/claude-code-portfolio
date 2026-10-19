@@ -1,6 +1,6 @@
 # Szilágyi Lídia – AI-alapú fejlesztési portfólió
 
-Technikai beállítottságú virtuális asszisztens és egyéni vállalkozó vagyok. 2016 óta dolgozom szoftvertesztelőként és tesztautomatizálási mérnökként (többek között az IBM-nél és a Morgan Stanley-nél), ma pedig AI-alapú fejlesztési eszközökkel (Claude, Claude Code) építek működő megoldásokat ügyfeleimnek és a saját vállalkozásomnak: ötletből vagy feladatleírásból indulok, és élesben használt rendszerig viszem.
+Technikai beállítottságú operatív partnerként dolgozom egyéni vállalkozóként. 2016 óta dolgozom szoftvertesztelőként és tesztautomatizálási mérnökként (többek között az IBM-nél és a Morgan Stanley-nél), ma pedig AI-alapú fejlesztési eszközökkel (Claude, Claude Code) építek működő megoldásokat ügyfeleimnek és a saját vállalkozásomnak: ötletből vagy feladatleírásból indulok, és élesben használt rendszerig viszem.
 
 Ebben a repóban négy munkámat mutatom be. Az ügyfélprojekteknél az ügyfelek nevét, belső azonosítóit, e-mail címeit és minden személyes adatot eltávolítottam.
 
