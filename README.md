@@ -7,7 +7,7 @@ Ebben a repóban négy munkámat mutatom be. Az ügyfélprojekteknél az ügyfel
 | # | Projekt | Típus | Fő technológiák | Állapot |
 |---|---------|-------|-----------------|---------|
 | 1 | [Ügyintézési automatizáció AI-előszűréssel](projektek/01-ugyintezesi-automatizacio/) | Belső céges rendszer | Google Apps Script, Sheets, Gmail, OpenAI API, Slack | Tesztüzemben, csapat által használt |
-| 2 | [Közös feladatkezelő webapp](projektek/02-kozos-feladatkezelo/) | Egyedi webapp ügyfélnek | Webapp, Netlify, Outlook/Teams integráció (tervezett) | Első fázis fejlesztés alatt |
+| 2 | [Közös feladatkezelő webapp](projektek/02-kozos-feladatkezelo/) | Egyedi webapp ügyfélnek | JavaScript, Netlify Functions (Node.js), ütemezett függvény, push-értesítések; Outlook/Teams integráció (tervezett) | Első fázis fejlesztés alatt |
 | 3 | [Esküvői weboldalak és webshop](projektek/03-eskuvoi-weboldalak/) | Saját vállalkozás, **Claude Code-dal fejlesztve** | Node.js, Vercel Functions, Google Sheets API, React, Tailwind CSS, Netlify, GitHub | Élesben: eskuvo.assistanceandmore.hu |
 | 4 | [Szoftvertesztelés és minőségbiztosítás](projektek/04-szoftverteszteles/) | QA | Teszttervezés, tesztesetek, AI-válaszok validálása | Folyamatos |
 

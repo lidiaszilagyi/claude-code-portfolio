@@ -51,9 +51,25 @@ flowchart LR
 4. Azonnali értesítés átadáskor
 5. „Kérés a felelőstől” gomb
 
-## Telepítés
+## Felépítés
 
-A webapp Netlify-on fut. A megrendelőnek egyelőre nincs saját domainje, ezért a Netlify-cím marad.
+```mermaid
+flowchart LR
+    B[Böngésző: egyoldalas webapp] -->|feladatok olvasása, mentése| F1[/api/board/]
+    B -->|push-feliratkozás| F2[/api/push/]
+    F1 --> D[(Netlify Blobs tárhely)]
+    F2 --> D
+    C[Ütemezett függvény óránként] -->|napi feladatok, határidők| P[Push-értesítés a böngészőbe]
+    D --> C
+```
+
+- **Frontend:** egyetlen HTML-oldalas webapp, telepítés és build-lépés nélkül
+- **Backend:** Netlify Functions (Node.js) – egy végpont a feladattábla adataihoz, egy a push-értesítések feliratkozásához
+- **Ütemezett feladat:** óránként futó Netlify-függvény, amely a napi feladatokról és a közelgő határidőkről értesít
+- **Értesítések:** böngészős push-értesítés, regisztráció nélkül
+- **Telepítés:** Netlify; a megrendelőnek egyelőre nincs saját domainje, ezért a Netlify-cím marad
+
+A projekt fejlesztés alatt áll; Claude-dal együtt fejlesztem, a követelményeket és a jogosultsági modellt én határozom meg, a tesztelést én végzem.
 
 ## Képernyőképek
 
