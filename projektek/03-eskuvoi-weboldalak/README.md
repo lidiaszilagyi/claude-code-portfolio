@@ -8,10 +8,23 @@ A vállalkozás ötletét a saját, külföldön tartott esküvőnk adta: a vend
 
 ## 1. Saját üzleti weboldal – [eskuvo.assistanceandmore.hu](https://eskuvo.assistanceandmore.hu)
 
-- A korábbi Canva-oldalt teljesen újraépítettem; a tervet Claude design-eszközével kezdtem, a kódot GitHub-repóban kezelem.
-- **Telepítés:** GitHub → Vercel automatikus telepítés, a domain DNS-beállítását (Rackhost) én végeztem el, az átállás leállás nélkül történt.
-- **Integrációk:** kapcsolatfelvételi űrlap, Calendly időpontfoglalás, SalesAutopilot hírlevél-feliratkozás.
-- Tervezett: angol/spanyol változat külön aldomainen.
+**Ez a fő Claude Code-projektem.** A korábbi Canva-oldalt teljesen újraépítettem: a tervet Claude design-eszközével kezdtem, a fejlesztést Claude Code-dal végzem egy privát GitHub-repóban. 2026. szeptember 28. óta 54 commit készült, ebből 19 a commit-előzmények szerint Claude Code-munkamenetben készült, az én feladatleírásom és ellenőrzésem alapján. A forráskódot kérésre szívesen megmutatom.
+
+**Felépítés**
+
+- **Saját statikus oldalgenerátor Node.js-ben:** a tartalom JSON-fájlokban van (főoldal, blog, webshop, szolgáltatói oldal, impresszum, jogi oldalak), a build-scriptek ebből állítják elő a HTML-oldalakat mindhárom nyelven.
+- **Három nyelv, két domain:** magyar változat az eskuvo., angol és spanyol a wedding. aldomainen, oldalanként egyetlen kanonikus címmel és 308-as átirányításokkal a két domain között.
+- **Szerver nélküli API (Vercel Functions):** kapcsolatfelvételi űrlap és hírlevél-feliratkozás, a beérkező adatok Google Sheets táblázatba kerülnek.
+- **SEO:** strukturált adatok (JSON-LD), sitemap hreflang-jelölésekkel, `llms.txt`, nyelvenkénti meta leírások, cikkenként és nyelvenként egyedi megosztási kép (og:image).
+- **Integrációk:** Calendly időpontfoglalás, SalesAutopilot hírlevél, közösségi megosztás, VirtualJog jogi dokumentumok beágyazása, letölthető nyereményjáték-szabályzat PDF-ben.
+- **Telepítés:** GitHub → Vercel automatikus telepítés; a domain DNS-beállítását (Rackhost) én végeztem, az átállás leállás nélkül történt.
+
+**Példák a Claude Code-dal megoldott feladatokra**
+
+- Domainek közötti átirányítási logika újratervezése, hogy minden oldalnak egy címe legyen
+- Beégetett magyar feliratok felkutatása és lefordítása az angol és spanyol oldalakon
+- A Facebook nem töltötte be a link-előnézetet (1,7 MB-os kép volt beállítva) → kis méretű, méretjelöléssel ellátott megosztási kép
+- Az impresszum adatainak kiszervezése JSON-ba úgy, hogy a többi nyelv kimenete bájtra változatlan maradjon
 
 ## 2. Többnyelvű esküvői weboldal-demó (Elena & Mateo)
 
