@@ -1,7 +1,7 @@
 # Közös feladatkezelő webapp – regisztráció nélkül
 
 **Megrendelő:** cégvezető ügyfél és irodavezetője (a továbbiakban: *Ügyfél* és *Irodavezető*)
-**Időszak:** 2026 ősz – első fázis fejlesztés alatt
+**Időszak:** 2026 ősz – első fázis elkészült, a megbízás lezárult
 **Szerepem:** igényfelmérés, jogosultsági modell tervezése, fejlesztés, telepítés, tesztelés
 
 ## A probléma
@@ -69,7 +69,7 @@ flowchart LR
 - **Értesítések:** böngészős push-értesítés, regisztráció nélkül
 - **Telepítés:** Netlify; a megrendelőnek egyelőre nincs saját domainje, ezért a Netlify-cím marad
 
-A projekt fejlesztés alatt áll; Claude-dal együtt fejlesztem, a követelményeket és a jogosultsági modellt én határozom meg, a tesztelést én végzem.
+Claude-dal együtt fejlesztettem: a követelményeket és a jogosultsági modellt én határoztam meg, a tesztelést én végeztem. Az anonimizált forráskód: [kod/](kod/)
 
 ## Képernyőképek
 

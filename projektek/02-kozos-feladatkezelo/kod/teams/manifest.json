@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "00000000-0000-4000-8000-000000000000",
+  "packageName": "app.netlify.kozosfeladatok",
+  "developer": {
+    "name": "Szilágyi Lídia",
+    "websiteUrl": "https://pelda-feladatok.netlify.app/",
+    "privacyUrl": "https://pelda-feladatok.netlify.app/",
+    "termsOfUseUrl": "https://pelda-feladatok.netlify.app/"
+  },
+  "name": {
+    "short": "Közös feladatok",
+    "full": "Közös feladatok"
+  },
+  "description": {
+    "short": "Közös feladatlista: kinél van, mi a státusza, mi a határidő.",
+    "full": "Közös feladatlista hármunknak: lista és tábla nézet, felelős, státusz, határidő, megjegyzések, archívum a lezárt feladatokról."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#1B6E69",
+  "staticTabs": [
+    {
+      "entityId": "kozos-feladatok",
+      "name": "Feladatok",
+      "contentUrl": "https://pelda-feladatok.netlify.app/",
+      "websiteUrl": "https://pelda-feladatok.netlify.app/",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "validDomains": [
+    "pelda-feladatok.netlify.app"
+  ]
+}

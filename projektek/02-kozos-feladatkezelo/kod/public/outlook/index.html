@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Feladattá alakítom</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+:root{--bg:#EDF1EF;--surface:#FBFCFB;--ink:#17262A;--muted:#5B6C71;--line:#D2DAD6;--accent:#1B6E69;--late:#C0392B;--done:#2E7D4F}
+*{box-sizing:border-box}
+body{margin:0;padding:14px 16px;background:var(--bg);color:var(--ink);font:14.5px/1.45 "Segoe UI",system-ui,sans-serif}
+form{display:flex;flex-direction:column;gap:12px}
+h1{font-size:18px;margin:0}
+label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600;color:var(--muted)}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input,select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+textarea{resize:vertical}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;background:var(--accent);color:#fff;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#msg{font-weight:600;min-height:1.4em}
+#msg.ok{color:var(--done)} #msg.err{color:var(--late)}
+a{color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+</head>
+<body>
+<form id="f">
+  <h1>Feladattá alakítom</h1>
+  <label>Megnevezés<input id="title" maxlength="200" required></label>
+  <div class="two">
+    <label>Kinél legyen<select id="owner"></select></label>
+    <label>Határidő<input type="date" id="due"></label>
+  </div>
+  <label>Leírás (a levélből)<textarea id="desc" rows="6" maxlength="4000"></textarea></label>
+  <label id="privRow" style="flex-direction:row;align-items:center;gap:8px" hidden><input type="checkbox" id="priv" style="width:auto"><span id="privTxt">Megosztom</span></label>
+  <label id="kodRow" hidden>Saját belépőkódod (csak egyszer kell)<input id="kod" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+  <button id="go">Feladat létrehozása</button>
+  <div id="msg" role="status"></div>
+  <a href="/" target="_blank" rel="noopener">A közös lista megnyitása</a>
+</form>
+<script>
+const $ = id => document.getElementById(id);
+const ls = { get(k){ try{ return localStorage.getItem(k) }catch{ return null } }, set(k,v){ try{ localStorage.setItem(k,v) }catch{} } };
+const say = (t, c) => { $("msg").textContent = t; $("msg").className = c || ""; };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+
+const hdr = () => ({"content-type":"application/json", "x-kod": ($("kod").value.trim() || ls.get("kod") || "")});
+const needCode = () => { $("kodRow").hidden = false; say("Add meg a saját belépőkódodat, majd próbáld újra.", "err"); $("kod").focus(); };
+let me = "";
+async function people(){
+  const r0 = await fetch("/api/board", {cache:"no-store", headers: hdr()});
+  if(r0.status === 401){ needCode(); return; }
+  const b = await r0.json();
+  me = b.me; if($("kod").value.trim()) ls.set("kod", $("kod").value.trim());
+  $("kodRow").hidden = true; say("");
+  $("owner").innerHTML = `<option value="">Nincs gazdája</option>` + b.people.map(p => `<option value="${p.id}" ${p.id===me?"selected":""}></option>`).join("");
+  [...$("owner").options].forEach(o => { const p = b.people.find(x => x.id === o.value); if(p) o.textContent = p.name; });
+  const restrictedName = b.people.find(p => p.id === "p3")?.name || "";
+  $("privRow").hidden = me === "p3"; $("privTxt").textContent = `Megosztom vele: ${restrictedName} (különben nem látja)`;
+}
+function fill(){
+  const it = window.Office?.context?.mailbox?.item;
+  if(!it){ say("Nyiss meg egy levelet, és onnan indítsd a gombot.", "err"); return; }
+  $("title").value = (it.subject || "").replace(/^\s*((re|fw|fwd|vá|tov)\s*:\s*)+/i, "").slice(0, 200);
+  const from = it.from ? `${it.from.displayName || ""} <${it.from.emailAddress || ""}>` : "";
+  const when = it.dateTimeCreated ? new Date(it.dateTimeCreated).toLocaleString("hu-HU") : "";
+  const head = `Levélből: ${from}${when ? " · " + when : ""}\n\n`;
+  $("desc").value = head;
+  it.body.getAsync(Office.CoercionType.Text, r => {
+    if(r.status === Office.AsyncResultStatus.Succeeded)
+      $("desc").value = (head + r.value.replace(/\r/g, "").replace(/\n{3,}/g, "\n\n").trim()).slice(0, 4000);
+  });
+}
+$("kod").onchange = () => { if(!me){ say(""); people(); } };
+$("f").onsubmit = async e => {
+  e.preventDefault();
+  if(!me){ needCode(); return; }
+  $("go").disabled = true; say("Mentés…");
+  try{
+    const task = { id: uid(), shared: $("priv").checked, title: $("title").value.trim(), desc: $("desc").value, owner: $("owner").value, due: $("due").value, status: "todo" };
+    const r = await fetch("/api/board", { method:"POST", headers: hdr(), body: JSON.stringify({ ops: [{ type:"upsert", task }] }) });
+    if(r.status === 401){ needCode(); $("go").disabled = false; return; }
+    if(!r.ok) throw new Error(r.status);
+    if($("kod").value.trim()) ls.set("kod", $("kod").value.trim());
+    say("Felkerült a közös listára.", "ok"); $("go").textContent = "Kész";
+  }catch(err){ say("Nem sikerült menteni. Próbáld újra.", "err"); $("go").disabled = false; }
+};
+people().catch(() => say("Nem érhető el a közös lista.", "err"));
+if(window.Office) Office.onReady(() => fill()); else say("Ez az oldal az Outlook gombjáról indítva működik.", "err");
+</script>
+</body>
+</html>
